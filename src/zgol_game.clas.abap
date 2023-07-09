@@ -57,18 +57,18 @@ CLASS zgol_game IMPLEMENTATION.
     DATA(column_header) = REDUCE string(
         INIT h = repeat( occ = max_row_label_width + 1 val = ` ` ) &&
                  |{ 1 NUMBER = USER WIDTH = max_column_label_width ALIGN = RIGHT }|
-        FOR c = 2 UNTIL c > column_count
+        FOR c = 2 WHILE c <= column_count
         NEXT h = |{ h } { c NUMBER = USER WIDTH = max_column_label_width ALIGN = RIGHT }| ).
 
     DATA(row_data) = REDUCE string(
-      INIT h = ``
-      FOR r = 1 UNTIL r > row_count
-      NEXT h = |{ h }{ r NUMBER = USER WIDTH = max_row_label_width ALIGN = RIGHT }| &&
-               REDUCE string(
-                 INIT a = `` FOR c = 1 UNTIL c > column_count
-                 NEXT a = |{ a } { format_state_for_output( current_board[ r ][ c ] )
-                                   WIDTH = max_column_label_width ALIGN = RIGHT }| ) &&
-               |\n| ).
+        INIT h = ``
+        FOR r = 1 WHILE r <= row_count
+        NEXT h = |{ h }{ r NUMBER = USER WIDTH = max_row_label_width ALIGN = RIGHT }| &&
+                 REDUCE string(
+                   INIT a = `` FOR c = 1 WHILE c <= column_count
+                   NEXT a = |{ a } { format_state_for_output( current_board[ r ][ c ] )
+                                     WIDTH = max_column_label_width ALIGN = RIGHT }| ) &&
+                 |\n| ).
 
     out->write( column_header && |\n| && row_data ).
   ENDMETHOD.
