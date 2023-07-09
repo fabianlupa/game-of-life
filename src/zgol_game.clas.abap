@@ -35,7 +35,7 @@ CLASS zgol_game IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     me->out = out.
 
-    initialize_board( rows = 3 columns = 3 initial_state = alive ).
+    initialize_board( rows = 10 columns = 10 initial_state = alive ).
 
     current_board[ 2 ][ 2 ] = dead.
 
@@ -63,11 +63,11 @@ CLASS zgol_game IMPLEMENTATION.
     DATA(row_data) = REDUCE string(
       INIT h = ``
       FOR r = 1 UNTIL r > row_count
-      NEXT h = |{ h }{ r NUMBER = USER WIDTH = max_row_label_width ALIGN = RIGHT } | &&
+      NEXT h = |{ h }{ r NUMBER = USER WIDTH = max_row_label_width ALIGN = RIGHT }| &&
                REDUCE string(
                  INIT a = `` FOR c = 1 UNTIL c > column_count
                  NEXT a = |{ a } { format_state_for_output( current_board[ r ][ c ] )
-                                   WIDTH = max_column_label_width ALIGN = CENTER }| ) &&
+                                   WIDTH = max_column_label_width ALIGN = RIGHT }| ) &&
                |\n| ).
 
     out->write( column_header && |\n| && row_data ).
